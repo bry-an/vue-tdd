@@ -52,6 +52,6 @@ describe('UserView', () => {
       state.user = userFixture
       const { userProfile } = build()
       //assert
-      expect(userProfile().vm.user).toBe(wrapper.vm.user)
+      expect(userProfile().vm.user).toBe(state.user)
   })
 })
