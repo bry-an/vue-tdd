@@ -1,9 +1,11 @@
+jest.mock("@/store/actions")
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import UserView from '@/views/UserView'
 import VUserSearchForm from '@/components/VUserSearchForm'
 import VUserProfile from '@/components/VUserProfile'
 import initialState from "@/store/state"
+import actions from "@/store/actions"
 import userFixture from "./fixtures/user"
 
 
@@ -17,7 +19,10 @@ describe('UserView', () => {
   const build = () => {
     const wrapper = shallowMount(UserView, {
         localVue,
-        store: new Vuex.Store({ state })
+        store: new Vuex.Store({
+            state, 
+            actions
+         })
     })
 
     return {
@@ -28,6 +33,7 @@ describe('UserView', () => {
   }
 
   beforeEach(() => {
+      jest.resetAllMocks()
       state = { ...initialState }
   })
 
@@ -54,4 +60,18 @@ describe('UserView', () => {
       //assert
       expect(userProfile().vm.user).toBe(state.user)
   })
+
+  it('searches for a user when "submitted" received', () => {
+      // arrange
+      const expectedUser = 'bryan'
+      const { userSearchForm } = build()
+
+      // do 
+      userSearchForm().vm.$emit("submitted", expectedUser)
+
+      // assert
+      expect(actions.SEARCH_USER).toHaveBeenCalled()
+      expect(actions.SEARCH_USER.mock.calls[0][1]).toEqual({ username: expectedUser })
+  })
+
 })
