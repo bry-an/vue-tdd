@@ -31,7 +31,7 @@ describe("VUserSearchForm", () => {
     it("calls 'submitted' event when submitting form", () => {
         const expectedUser = 'bryan'
         const { wrapper, button, input } = build()
-        input().element.value = expectedUser
+        input().element.value = expectedUser // manually entering input value
 
         // do 
         input().trigger("input")
