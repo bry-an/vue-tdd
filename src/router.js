@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+const UserView = () => import("@/views/UserView")
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: []
+  routes: [
+    {
+      path: "/", 
+      component: UserView
+    }
+  ]
 })
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route

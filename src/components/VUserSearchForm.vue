@@ -7,6 +7,11 @@
 
 <script>
 export default {
-  name: 'UserSearchForm'
+  name: 'VUserSearchForm', 
+  data() {
+      return {
+          username: ''
+      }
+  }
 }
 </script>
